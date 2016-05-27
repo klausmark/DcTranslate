@@ -7,6 +7,31 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"  />
+        <ListView Grid.Row="1" ItemsSource="{Binding NumberTranslations}" SelectedItem="{Binding SelectedNumberTranslation}">
+            <ListView.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditNumberTranslation}" CommandParameter="{StaticResource ViewFunctions}" />
+            </ListView.InputBindings>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="From number" DisplayMemberBinding="{Binding FromNumber}" />
+                    <GridViewColumn Header="To number" DisplayMemberBinding="{Binding ToNumber}" />
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Text="{Binding RowsPerPage}"/>
+            <ComboBox Grid.Column="1" ItemsSource="{Binding PosiblePages}" SelectedItem="{Binding Page}" />
+        </Grid>
     </Grid>
 </Window>
