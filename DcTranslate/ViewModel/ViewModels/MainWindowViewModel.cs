@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Security.AccessControl;
 using DcTranslate.Model;
 using DcTranslate.View.Helpers;
+using DcTranslate.View.Windows;
 using DcTranslate.ViewModel.BaseClasses;
 using DcTranslate.ViewModel.Helpers;
 
@@ -10,7 +12,7 @@ namespace DcTranslate.ViewModel.ViewModels
 {
     public class MainWindowViewModel : NotifyBase
     {
-        private readonly NumberTranslationRepositorySqliteDemo _repository;
+        private readonly INumberTranslationRepository _repository;
 
         public MainWindowViewModel()
         {
@@ -18,7 +20,45 @@ namespace DcTranslate.ViewModel.ViewModels
             RowsPerPage = _repository.PageSize;
             UpdateListOfNumberTranslations();
             UpdatePosiblePages();
-            EditNumberTranslation = new DelegateCommand<ViewFunctions>(vf => vf.EditNumberTranslation(SelectedNumberTranslation, n=> _repository.Update(n)));
+            EditNumberTranslationCommand = new DelegateCommand<ViewFunctions>(EditNumberTranslation);
+            AddNewNumberTranslationCommand = new DelegateCommand<ViewFunctions>(AddNewNumberTranslation);
+        }
+
+        private void EditNumberTranslation(ViewFunctions viewFunctions)
+        {
+            if (SelectedNumberTranslation == null) return;
+
+            if (viewFunctions.EditNumberTranslation(SelectedNumberTranslation) == false) return;
+
+            try
+            {
+                _repository.Update(SelectedNumberTranslation);
+            }
+            catch (Exception exception)
+            {
+                viewFunctions.DisplayMessage(exception.Message);
+                return;
+            }
+            UpdateListOfNumberTranslations(force: true);
+        }
+
+        private void AddNewNumberTranslation(ViewFunctions viewFunctions)
+        {
+            var numberTranslation = viewFunctions.AddNumberTranslation();
+
+            if (numberTranslation == null) return;
+
+            try
+            {
+                _repository.Add(numberTranslation);
+            }
+            catch (Exception exception)
+            {
+                viewFunctions.DisplayMessage(exception.Message);
+                return;
+            }
+
+            UpdateListOfNumberTranslations(force: true);
         }
 
         public ObservableCollection<NumberTranslation> NumberTranslations
@@ -82,9 +122,9 @@ namespace DcTranslate.ViewModel.ViewModels
             Page = PosiblePages[0];
         }
 
-        private void UpdateListOfNumberTranslations()
+        private void UpdateListOfNumberTranslations(bool force = false)
         {
-            if (LastRepositoryCallWasDifferentThanThis())
+            if (force || LastRepositoryCallWasDifferentThanThis())
                 NumberTranslations = new ObservableCollection<NumberTranslation>(_repository.GetNumberTranslations(Search, Page));
             _lastCall = new Tuple<string, long, long>(Search, Page, RowsPerPage);
         }
@@ -99,6 +139,7 @@ namespace DcTranslate.ViewModel.ViewModels
             return false;
         }
 
-        public DelegateCommand<ViewFunctions> EditNumberTranslation { get; }
+        public DelegateCommand<ViewFunctions> EditNumberTranslationCommand { get; }
+        public DelegateCommand<ViewFunctions> AddNewNumberTranslationCommand { get; } 
     }
 }

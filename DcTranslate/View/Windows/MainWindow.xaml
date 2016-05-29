@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:DcTranslate.View.Helpers"
         DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
@@ -12,11 +13,14 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"  />
-        <ListView Grid.Row="1" ItemsSource="{Binding NumberTranslations}" SelectedItem="{Binding SelectedNumberTranslation}">
-            <ListView.InputBindings>
-                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditNumberTranslation}" CommandParameter="{StaticResource ViewFunctions}" />
-            </ListView.InputBindings>
+        <TextBox Grid.Row="0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" />
+        <ListView Grid.Row="1" ItemsSource="{Binding NumberTranslations}" SelectedItem="{Binding SelectedNumberTranslation}" helpers:DoubleClickProperty.DoubleClickCommand="{Binding EditNumberTranslationCommand}" >
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Edit" Command="{Binding EditNumberTranslationCommand}" CommandParameter="{StaticResource ViewFunctions}" />
+                    <MenuItem Header="New" Command="{Binding AddNewNumberTranslationCommand}" CommandParameter="{StaticResource ViewFunctions}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="From number" DisplayMemberBinding="{Binding FromNumber}" />

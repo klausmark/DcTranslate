@@ -3,7 +3,7 @@ using System.Data.SQLite;
 
 namespace DcTranslate.Model
 {
-    public class NumberTranslationRepositorySqliteDemo
+    public class NumberTranslationRepositorySqliteDemo : INumberTranslationRepository
     {
         private readonly SQLiteConnection _connection;
         public NumberTranslationRepositorySqliteDemo()
@@ -21,7 +21,7 @@ namespace DcTranslate.Model
             var whereClause = string.IsNullOrEmpty(like) ? "" : $" WHERE `from_number` LIKE '%{like}%' OR `to_number` LIKE '%{like}%' OR `description` LIKE '%{like}%'";
             var limitClause = $" LIMIT {offset},{PageSize}";
             var orderby = " ORDER BY `from_number`";
-            var sql = $"SELECT `from_number`,`to_number`,`description` FROM `number_translations` {whereClause}{orderby}{limitClause}";
+            var sql = $"SELECT `id`,`from_number`,`to_number`,`description` FROM `number_translations` {whereClause}{orderby}{limitClause}";
             var sqlCount = $"SELECT COUNT(*) FROM `number_translations` {whereClause}";
             var numberOfRowsSelectWouldHaveReturnedWithoutLimit = (long) new SQLiteCommand(sqlCount, _connection).ExecuteScalar();
             LastQueryWouldHaveReturnedThisAmountOfPages = numberOfRowsSelectWouldHaveReturnedWithoutLimit/PageSize;
@@ -29,31 +29,41 @@ namespace DcTranslate.Model
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var fromNumber = reader.GetString(0);
-                var toNumber = reader.GetString(1);
-                var description = reader.IsDBNull(2) ? null : reader.GetString(2);
-                yield return new NumberTranslation(fromNumber, toNumber, description);
+                var id = reader.GetInt64(0);
+                var fromNumber = reader.GetString(1);
+                var toNumber = reader.GetString(2);
+                var description = reader.IsDBNull(3) ? null : reader.GetString(3);
+                yield return new NumberTranslation
+                {
+                    Id=id,
+                    FromNumber = fromNumber,
+                    ToNumber = toNumber,
+                    Description = description
+                };
             }
         }
 
         public long LastQueryWouldHaveReturnedThisAmountOfPages { get; set; }
         public long PageSize { get; set; } = 50;
 
-        public void Add(NumberTranslation numberTranslation)
+        public NumberTranslation Add(NumberTranslation numberTranslation)
         {
             var sql = $"INSERT INTO `number_translations` (`from_number`,`to_number`,`description`) VALUES ('{numberTranslation.FromNumber}','{numberTranslation.ToNumber}','{numberTranslation.Description}')";
             new SQLiteCommand(sql, _connection).ExecuteNonQuery();
+            var id = (long)new SQLiteCommand("SELECT last_insert_rowid()", _connection).ExecuteScalar();
+            numberTranslation.Id = id;
+            return numberTranslation;
         }
 
         public void Remove(NumberTranslation numberTranslation)
         {
-            var sql = $"DELETE FROM `number_translations` WHERE `from_number = '{numberTranslation.FromNumber}'`";
+            var sql = $"DELETE FROM `number_translations` WHERE `id = '{numberTranslation.Id}'`";
             new SQLiteCommand(sql, _connection).ExecuteNonQuery();
         }
 
         public void Update(NumberTranslation numberTranslation)
         {
-            var sql = $"UPDATE `number_translations` SET `to_number`='{numberTranslation.ToNumber}',`description`='{numberTranslation.Description}' WHERE `from_number`='{numberTranslation.FromNumber}'";
+            var sql = $"UPDATE `number_translations` SET `from_number`={numberTranslation.FromNumber}, `to_number`='{numberTranslation.ToNumber}',`description`='{numberTranslation.Description}' WHERE `id`='{numberTranslation.Id}'";
             new SQLiteCommand(sql, _connection).ExecuteNonQuery();
         }
     }
