@@ -133,7 +133,7 @@ namespace DcTranslate.ViewModel.ViewModels
         private void UpdatePosiblePages()
         {
             var listOfPosiblePages = new List<long>();
-            for (int i = 0; i < _repository.LastQueryWouldHaveReturnedThisAmountOfPages + 1; i++)
+            for (int i = 0; i < _repository.LastQueryWouldHaveReturnedThisAmountOfPages; i++)
                 listOfPosiblePages.Add(i);
             PosiblePages = listOfPosiblePages;
             Page = PosiblePages[0];
