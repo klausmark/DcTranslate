@@ -86,6 +86,7 @@
     <Compile Include="ViewModel\ViewModels\AddEditWindowViewModel.cs" />
     <Compile Include="View\Helpers\ButtonProperties.cs" />
     <Compile Include="View\Helpers\DoubleClickProperty.cs" />
+    <Compile Include="View\Helpers\IViewFunctions.cs" />
     <Compile Include="View\Helpers\ViewFunctions.cs" />
     <Compile Include="ViewModel\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="View\Helpers\ViewModelLocator.cs" />

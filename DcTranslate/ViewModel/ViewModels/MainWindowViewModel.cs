@@ -13,22 +13,24 @@ namespace DcTranslate.ViewModel.ViewModels
     public class MainWindowViewModel : NotifyBase
     {
         private readonly INumberTranslationRepository _repository;
+        private readonly IViewFunctions _viewFunctions;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IViewFunctions viewFunctions)
         {
+            _viewFunctions = viewFunctions;
             _repository = new NumberTranslationRepositorySqliteDemo();
             RowsPerPage = _repository.PageSize;
             UpdateListOfNumberTranslations();
             UpdatePosiblePages();
-            EditNumberTranslationCommand = new DelegateCommand<ViewFunctions>(EditNumberTranslation);
-            AddNewNumberTranslationCommand = new DelegateCommand<ViewFunctions>(AddNewNumberTranslation);
+            EditNumberTranslationCommand = new DelegateCommand(EditNumberTranslation);
+            AddNewNumberTranslationCommand = new DelegateCommand(AddNewNumberTranslation);
         }
 
-        private void EditNumberTranslation(ViewFunctions viewFunctions)
+        private void EditNumberTranslation()
         {
             if (SelectedNumberTranslation == null) return;
 
-            if (viewFunctions.EditNumberTranslation(SelectedNumberTranslation) == false) return;
+            if (_viewFunctions.EditNumberTranslation(SelectedNumberTranslation) == false) return;
 
             try
             {
@@ -36,15 +38,15 @@ namespace DcTranslate.ViewModel.ViewModels
             }
             catch (Exception exception)
             {
-                viewFunctions.DisplayMessage(exception.Message);
+                _viewFunctions.DisplayMessage(exception.Message);
                 return;
             }
             UpdateListOfNumberTranslations(force: true);
         }
 
-        private void AddNewNumberTranslation(ViewFunctions viewFunctions)
+        private void AddNewNumberTranslation()
         {
-            var numberTranslation = viewFunctions.AddNumberTranslation();
+            var numberTranslation = _viewFunctions.AddNumberTranslation();
 
             if (numberTranslation == null) return;
 
@@ -54,7 +56,7 @@ namespace DcTranslate.ViewModel.ViewModels
             }
             catch (Exception exception)
             {
-                viewFunctions.DisplayMessage(exception.Message);
+                _viewFunctions.DisplayMessage(exception.Message);
                 return;
             }
 
@@ -139,7 +141,7 @@ namespace DcTranslate.ViewModel.ViewModels
             return false;
         }
 
-        public DelegateCommand<ViewFunctions> EditNumberTranslationCommand { get; }
-        public DelegateCommand<ViewFunctions> AddNewNumberTranslationCommand { get; } 
+        public DelegateCommand EditNumberTranslationCommand { get; }
+        public DelegateCommand AddNewNumberTranslationCommand { get; } 
     }
 }

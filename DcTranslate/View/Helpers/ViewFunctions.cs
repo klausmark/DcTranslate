@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using DcTranslate.Model;
 using DcTranslate.View.Windows;
@@ -6,7 +5,7 @@ using DcTranslate.ViewModel.ViewModels;
 
 namespace DcTranslate.View.Helpers
 {
-    public class ViewFunctions
+    public class ViewFunctions : IViewFunctions
     {
         public bool EditNumberTranslation(NumberTranslation numberTranslation)
         {

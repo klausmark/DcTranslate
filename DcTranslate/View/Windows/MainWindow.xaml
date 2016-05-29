@@ -13,7 +13,14 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Search: " />
+            <TextBox Grid.Column="1" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
         <ListView Grid.Row="1" ItemsSource="{Binding NumberTranslations}" SelectedItem="{Binding SelectedNumberTranslation}" helpers:DoubleClickProperty.DoubleClickCommand="{Binding EditNumberTranslationCommand}" >
             <ListView.ContextMenu>
                 <ContextMenu>
@@ -31,11 +38,15 @@
         </ListView>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Text="{Binding RowsPerPage}"/>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding PosiblePages}" SelectedItem="{Binding Page}" />
+            <Label Grid.Column="0" Content="Rows per page: "/>
+            <TextBox Grid.Column="1" Text="{Binding RowsPerPage}"/>
+            <Label Grid.Column="2" Content="Page: "/>
+            <ComboBox Grid.Column="3" ItemsSource="{Binding PosiblePages}" SelectedItem="{Binding Page}" />
         </Grid>
     </Grid>
 </Window>

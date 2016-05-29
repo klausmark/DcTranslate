@@ -25,6 +25,8 @@ namespace DcTranslate.Model
             var sqlCount = $"SELECT COUNT(*) FROM `number_translations` {whereClause}";
             var numberOfRowsSelectWouldHaveReturnedWithoutLimit = (long) new SQLiteCommand(sqlCount, _connection).ExecuteScalar();
             LastQueryWouldHaveReturnedThisAmountOfPages = numberOfRowsSelectWouldHaveReturnedWithoutLimit/PageSize;
+            if (numberOfRowsSelectWouldHaveReturnedWithoutLimit%PageSize != 0)
+                LastQueryWouldHaveReturnedThisAmountOfPages++;
             var command = new SQLiteCommand(sql, _connection);
             var reader = command.ExecuteReader();
             while (reader.Read())
