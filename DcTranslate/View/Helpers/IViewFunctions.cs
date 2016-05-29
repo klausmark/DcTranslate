@@ -7,5 +7,6 @@ namespace DcTranslate.View.Helpers
         bool EditNumberTranslation(NumberTranslation numberTranslation);
         NumberTranslation AddNumberTranslation();
         void DisplayMessage(string message);
+        void About();
     }
 }

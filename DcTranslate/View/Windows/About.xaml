@@ -1,0 +1,16 @@
+﻿<Window x:Class="DcTranslate.View.Windows.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DcTranslate.View.Windows"
+        xmlns:helpers="clr-namespace:DcTranslate.View.Helpers"
+        mc:Ignorable="d"
+        Title="About" Height="300" Width="300">
+    <Grid>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="86,25,0,0" TextWrapping="Wrap" Text="DCTranslate version 0.1" VerticalAlignment="Top" RenderTransformOrigin="1.16,-0.133"/>
+        <Button helpers:ButtonProperties.DialogResultOk="True" x:Name="button" Content="Ok" IsDefault="True" HorizontalAlignment="Left" Margin="111,220,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="139" Margin="10,59,0,0" TextWrapping="Wrap" Text="Created by Klaus Mark" VerticalAlignment="Top" Width="272"/>
+
+    </Grid>
+</Window>

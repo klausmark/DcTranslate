@@ -65,6 +65,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\Windows\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\AddEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -90,6 +94,9 @@
     <Compile Include="View\Helpers\ViewFunctions.cs" />
     <Compile Include="ViewModel\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="View\Helpers\ViewModelLocator.cs" />
+    <Compile Include="View\Windows\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\AddEditWindow.xaml.cs">
       <DependentUpon>AddEditWindow.xaml</DependentUpon>
     </Compile>

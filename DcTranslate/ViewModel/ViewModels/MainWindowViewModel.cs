@@ -25,6 +25,7 @@ namespace DcTranslate.ViewModel.ViewModels
             EditNumberTranslationCommand = new DelegateCommand(EditNumberTranslation);
             AddNewNumberTranslationCommand = new DelegateCommand(AddNewNumberTranslation);
             DeleteNumberTranslationCommand = new DelegateCommand(DeleteNumberTranslation);
+            AboutCommand = new DelegateCommand(About);
         }
 
         private void EditNumberTranslation()
@@ -73,6 +74,10 @@ namespace DcTranslate.ViewModel.ViewModels
             UpdateListOfNumberTranslations(force:true);
         }
 
+        public void About()
+        {
+            _viewFunctions.About();
+        }
         public ObservableCollection<NumberTranslation> NumberTranslations
         {
             get { return GetField<ObservableCollection<NumberTranslation>>(); }
@@ -154,5 +159,6 @@ namespace DcTranslate.ViewModel.ViewModels
         public DelegateCommand EditNumberTranslationCommand { get; }
         public DelegateCommand AddNewNumberTranslationCommand { get; }
         public DelegateCommand DeleteNumberTranslationCommand { get; }
+        public DelegateCommand AboutCommand { get; }
     }
 }

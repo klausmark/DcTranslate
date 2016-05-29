@@ -42,5 +42,11 @@ namespace DcTranslate.View.Helpers
         {
             MessageBox.Show(message);
         }
+
+        public void About()
+        {
+            var window = new About();
+            window.ShowDialog();
+        }
     }
 }
