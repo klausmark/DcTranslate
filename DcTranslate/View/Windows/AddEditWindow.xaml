@@ -4,16 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helpers="clr-namespace:DcTranslate.View.Helpers"
+        xmlns:validationRules="clr-namespace:DcTranslate.View.ValidationRules"
         mc:Ignorable="d"
         Title="AddEditWindow" Height="300" Width="300">
+    <Window.Resources>
+        <x:Array Type="ValidationRule" x:Key="bla">
+            <validationRules:E164ValidationRule />
+        </x:Array>
+    </Window.Resources>
     <Grid>
         <Button IsDefault="True" helpers:ButtonProperties.DialogResultOk="True" Content="Ok" HorizontalAlignment="Left" Margin="24,225,0,0" VerticalAlignment="Top" Width="75"/>
         <Button IsCancel="True" x:Name="button1" Content="Cancel" HorizontalAlignment="Left" Margin="170,225,0,0" VerticalAlignment="Top" Width="75"/>
         <Label x:Name="label" Content="From number" HorizontalAlignment="Left" Margin="24,36,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="To number" HorizontalAlignment="Left" Margin="24,86,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label2" Content="Description" HorizontalAlignment="Left" Margin="24,134,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox" Text="{Binding NumberTranslation.FromNumber}" HorizontalAlignment="Left" Height="23" Margin="125,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="textBox1" Text="{Binding NumberTranslation.ToNumber}" HorizontalAlignment="Left" Height="23" Margin="125,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="125,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+            <TextBox.Text>
+                <Binding Path="NumberTranslation.FromNumber" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:FromNumberValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="125,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+            <TextBox.Text>
+                <Binding Path="NumberTranslation.ToNumber" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:E164ValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBox x:Name="textBox2" Text="{Binding NumberTranslation.Description}" HorizontalAlignment="Left" Height="23" Margin="125,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
