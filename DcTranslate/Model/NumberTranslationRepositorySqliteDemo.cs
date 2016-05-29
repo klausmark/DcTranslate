@@ -57,9 +57,9 @@ namespace DcTranslate.Model
             return numberTranslation;
         }
 
-        public void Remove(NumberTranslation numberTranslation)
+        public void Delete(NumberTranslation numberTranslation)
         {
-            var sql = $"DELETE FROM `number_translations` WHERE `id = '{numberTranslation.Id}'`";
+            var sql = $"DELETE FROM `number_translations` WHERE `id` = {numberTranslation.Id}";
             new SQLiteCommand(sql, _connection).ExecuteNonQuery();
         }
 

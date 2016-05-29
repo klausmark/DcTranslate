@@ -25,9 +25,8 @@ namespace DcTranslate.View.Helpers
             var control = (Control) dependencyObject;
             control.MouseDoubleClick += (sender, args) =>
             {
-                var viewFunctions = (ViewFunctions)Application.Current.FindResource("ViewFunctions");
                 var command = (ICommand) eventArgs.NewValue;
-                if (command.CanExecute(viewFunctions)) command.Execute(viewFunctions);
+                if (command.CanExecute(null)) command.Execute(null);
             };
         }
     }

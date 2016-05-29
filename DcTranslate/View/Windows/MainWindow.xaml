@@ -24,8 +24,9 @@
         <ListView Grid.Row="1" ItemsSource="{Binding NumberTranslations}" SelectedItem="{Binding SelectedNumberTranslation}" helpers:DoubleClickProperty.DoubleClickCommand="{Binding EditNumberTranslationCommand}" >
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Edit" Command="{Binding EditNumberTranslationCommand}" CommandParameter="{StaticResource ViewFunctions}" />
-                    <MenuItem Header="New" Command="{Binding AddNewNumberTranslationCommand}" CommandParameter="{StaticResource ViewFunctions}"/>
+                    <MenuItem Header="Edit" Command="{Binding EditNumberTranslationCommand}" />
+                    <MenuItem Header="New" Command="{Binding AddNewNumberTranslationCommand}" />
+                    <MenuItem Header="Delete" Command="{Binding DeleteNumberTranslationCommand}" />
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.View>

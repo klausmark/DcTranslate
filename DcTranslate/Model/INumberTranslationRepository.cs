@@ -8,7 +8,7 @@ namespace DcTranslate.Model
         long LastQueryWouldHaveReturnedThisAmountOfPages { get; }
         long PageSize { get; set; }
         NumberTranslation Add(NumberTranslation numberTranslation);
-        void Remove(NumberTranslation numberTranslation);
+        void Delete(NumberTranslation numberTranslation);
         void Update(NumberTranslation numberTranslation);
     }
 }

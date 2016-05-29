@@ -24,6 +24,7 @@ namespace DcTranslate.ViewModel.ViewModels
             UpdatePosiblePages();
             EditNumberTranslationCommand = new DelegateCommand(EditNumberTranslation);
             AddNewNumberTranslationCommand = new DelegateCommand(AddNewNumberTranslation);
+            DeleteNumberTranslationCommand = new DelegateCommand(DeleteNumberTranslation);
         }
 
         private void EditNumberTranslation()
@@ -61,6 +62,15 @@ namespace DcTranslate.ViewModel.ViewModels
             }
 
             UpdateListOfNumberTranslations(force: true);
+        }
+
+        private void DeleteNumberTranslation()
+        {
+            if (SelectedNumberTranslation == null) return;
+
+            _repository.Delete(SelectedNumberTranslation);
+
+            UpdateListOfNumberTranslations(force:true);
         }
 
         public ObservableCollection<NumberTranslation> NumberTranslations
@@ -142,6 +152,7 @@ namespace DcTranslate.ViewModel.ViewModels
         }
 
         public DelegateCommand EditNumberTranslationCommand { get; }
-        public DelegateCommand AddNewNumberTranslationCommand { get; } 
+        public DelegateCommand AddNewNumberTranslationCommand { get; }
+        public DelegateCommand DeleteNumberTranslationCommand { get; }
     }
 }
