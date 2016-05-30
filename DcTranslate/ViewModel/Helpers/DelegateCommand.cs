@@ -35,6 +35,7 @@ namespace DcTranslate.ViewModel.Helpers
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
     }
+
     public class DelegateCommand<T> : ICommand
     {
         private readonly Action<T> _execute;

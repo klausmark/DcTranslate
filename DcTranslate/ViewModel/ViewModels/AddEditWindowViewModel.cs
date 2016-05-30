@@ -6,7 +6,6 @@ namespace DcTranslate.ViewModel.ViewModels
     public class AddEditWindowViewModel : NotifyBase
     {
         public NumberTranslation NumberTranslation { get; set; }
-        public bool IsEdit { get; set; }
 
         public AddEditWindowViewModel(NumberTranslation numberTranslation)
         {
@@ -15,13 +14,11 @@ namespace DcTranslate.ViewModel.ViewModels
             NumberTranslation.FromNumber = numberTranslation.FromNumber;
             NumberTranslation.ToNumber = numberTranslation.ToNumber;
             NumberTranslation.Description = numberTranslation.Description;
-            IsEdit = true;
         }
 
         public AddEditWindowViewModel() : this(new NumberTranslation())
         {
             NumberTranslation = new NumberTranslation();
-            IsEdit = false;
         }
     }
 }

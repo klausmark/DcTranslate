@@ -6,7 +6,6 @@
     <Application.Resources>
          <ResourceDictionary>
              <helpers:ViewModelLocator x:Key="ViewModelLocator" />
-             <helpers:ViewFunctions x:Key="ViewFunctions"/>
          </ResourceDictionary>
     </Application.Resources>
 </Application>
